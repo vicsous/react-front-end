@@ -12,8 +12,7 @@ if(accessToken === 'undefined') {
 const axiosInstance = axios.create({
     baseURL,
     headers: { 
-        Authorization: `Bearer ${accessToken || ''}`,
-        "Access-Control-Allow-Origin": "*"
+        Authorization: `Bearer ${accessToken || ''}`
     }
 })
 
