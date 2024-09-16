@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import * as Yup from 'yup';
+import { NavLink } from 'react-router-dom';
 
 const Spinner = () => (
   <div className="flex justify-center items-center h-screen">
@@ -18,7 +19,8 @@ const Signup = () => {
     name: '',
     username: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+	terms: false
   }
 
   const validationSchema = Yup.object({
@@ -35,7 +37,10 @@ const Signup = () => {
       .required('Required field'),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref('password'), null], 'Passwords must be the same')
-      .required('Required field')
+      .required('Required field'),
+	  terms: Yup.boolean()
+    .oneOf([true], 'You must accept the terms and conditions')
+    .required('Required field') 
   });
 
   const handleSubmit = (values) => {
@@ -98,15 +103,16 @@ const Signup = () => {
 								</div>
 								<div className="flex items-start">
 									<div className="flex items-center h-5">
-										<Field id="terms" aria-describedby="terms" type="checkbox" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" ></Field>
+										<Field id="terms" aria-describedby="terms" type="checkbox" name="terms" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" ></Field>
 									</div>
 									<div className="ml-3 text-sm">
-										<label htmlFor="terms" className="font-light text-gray-500 dark:text-gray-300">I accept the <a className="font-medium text-primary-600 hover:underline dark:text-primary-500" href="#">Terms and Conditions</a></label>
+										<label htmlFor="terms" className="font-light text-gray-500 dark:text-gray-300">I read and accept the <a className="font-medium text-primary-600 hover:underline dark:text-primary-500" href="#">Terms and Conditions</a></label>
 									</div>
 								</div>
+								<ErrorMessage name="terms" component="div" className="text-red-500"/>
 								<button type="submit" disabled={loading} className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Create an account</button>
 								<p className="text-sm font-light text-gray-500 dark:text-gray-400">
-									Already have an account? <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
+									Already have an account? <NavLink to="/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</NavLink>
 								</p>
 							</Form>
 							</Formik>
