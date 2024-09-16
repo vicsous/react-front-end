@@ -2,17 +2,15 @@ import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
 
 export default function NotFound () {
   return (
-    <section className="flex items-center h-full p-16 bg-gray-900 text-gray-100">
-      <div className="container flex flex-col items-center justify-center px-5 mx-auto my-8">
-        <div className="max-w-md text-center">
-          <h2 className="mb-8 font-extrabold text-9xl text-gray-600">
-            <span className="sr-only">Error</span>404
-          </h2>
-          <p className="text-2xl font-semibold md:text-3xl">Sorry, we couldn't find this page.</p>
-          <p className="mt-4 mb-8 text-gray-400">But dont worry, you can find plenty of other things on our homepage.</p>
-          <NavLink rel="noopener noreferrer" to="/" className="px-8 py-3 font-semibold rounded bg-violet-400 text-gray-900">Back to homepage</NavLink>
-        </div>
+  <section className="bg-white dark:bg-gray-900 h-screen">
+      <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+          <div className="mx-auto max-w-screen-sm text-center">
+              <h1 className="mb-4 text-7xl tracking-tight font-extrabold text-blue-700 lg:text-9xl text-primary-600 dark:text-primary-500">404</h1>
+              <p className="mb-4 text-3xl tracking-tight font-bold text-gray-900 md:text-4xl dark:text-white">Something's missing.</p>
+              <p className="mb-4 text-lg font-light text-gray-500 dark:text-gray-400">Sorry, we can't find that page. You'll find lots to explore on the home page. </p>
+              <NavLink to="/" className="inline-flex text-white bg-primary-600 bg-blue-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-primary-900 my-4">Back to Homepage</NavLink>
+          </div>   
       </div>
-    </section>
+  </section>
   )
 }

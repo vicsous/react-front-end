@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 // Pages
 import Admin from '../pages/Admin';
+import About from '../pages/About';
 import Blog from '../pages/Blog';
 import Landing from '../pages/Landing';
 import Login from '../pages/Login';
@@ -24,6 +25,7 @@ export default function Routes () {
           <Switch>
               <Route path="/logout" component={Logout} />
               <Route path="/blog" component={Blog} />
+              <Route path="/about" component={About} />
 
               <PublicRoute exact path="/" component={Landing} />
               <PublicRoute path="/signup" component={Signup} />
