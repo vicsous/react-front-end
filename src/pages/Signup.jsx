@@ -1,7 +1,7 @@
-// import { signup } from "../store/userSlice";
+import { signup } from '../store/userSlice';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
 import * as Yup from 'yup';
 
 const Spinner = () => (
@@ -15,6 +15,7 @@ const Signup = () => {
   const dispatch = useDispatch();
   const initialValues = {
     email: '',
+    name: '',
     username: '',
     password: '',
     confirmPassword: ''
@@ -22,23 +23,24 @@ const Signup = () => {
 
   const validationSchema = Yup.object({
     email: Yup.string()
-      .email('E-mail inválido')
-      .required('Campo obrigatório'),
+      .email('Invalid email')
+      .required('Required field'),
     username: Yup.string()
-      .min(2, 'O nome de usuário deve ter pelo menos 2 caracteres')
-      .max(30, 'O nome de usuário deve ter no máximo 30 caracteres')
-      .required('Campo obrigatório'),
+      .min(5, 'Must be at least 5 char. long')
+      .max(32, 'Must be less than 32 char. long')
+      .matches(/^[A-Za-z0-9]+$/, 'Only letters and numbers are allowed')
+      .required('Required field'),
     password: Yup.string()
-      .min(6, 'A senha deve ter pelo menos 6 caracteres')
-      .required('Campo obrigatório'),
+      .min(6, 'Password too short')
+      .required('Required field'),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref('password'), null], 'As senhas devem ser iguais')
-      .required('Campo obrigatório')
+      .oneOf([Yup.ref('password'), null], 'Passwords must be equal')
+      .required('Required field')
   });
 
   const handleSubmit = (values) => {
     setLoading(true);
-    /*
+    alert(JSON.stringify(values))
     dispatch(signup(values))
       .then(data => {
         localStorage.setItem('accessToken', data.payload.accessToken);
@@ -49,9 +51,10 @@ const Signup = () => {
       .finally(() => {
         setLoading(false);
       });
-      */
-  }
-
+      setLoading(false)
+    setLoading(false)
+    }
+  
   const user = useSelector(state => state.user);
 
   return (
@@ -59,32 +62,44 @@ const Signup = () => {
     {loading ? <Spinner /> : (
       <div className="flex justify-center items-center h-screen bg-gray-800">
         <div className="w-full max-w-md p-8 space-y-3 rounded-xl bg-gray-900 text-gray-100">
-          <h1 className="text-2xl font-bold text-center">Signup</h1>
+          <h1 className="text-2xl font-bold text-center">Sign Up</h1>
           {user?.error && <div className="text-red-500 mb-4">{user.error}</div>}
 
           <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
 
-            <Form form novalidate="" action="" className="space-y-6">
+            <Form noValidate="" action="" className="space-y-6">
               <div className="space-y-1 text-sm">
-                <label for="email" className="block text-gray-400">Email</label>
+                <label htmlFor="email" className="block text-gray-400">Email</label>
                 <Field type="text" placeholder="example@mail.com" id="email" name="email" className="w-full px-4 py-3 rounded-md border-gray-700 text-gray-100 focus:border-violet-400 text-gray-700" />
                 <ErrorMessage name="email" component="div" className="text-red-500" />
               </div>
+        
+              <div className="space-y-1 text-sm">
+                <label htmlFor="name" className="block text-gray-400">Name</label>
+                <Field type="text" name="name" id="name" placeholder="João da Silva" className="w-full px-4 py-3 rounded-md border-gray-700 text-gray-100 focus:border-violet-400 text-gray-700" />
+                <ErrorMessage name="name" component="div" className="text-red-500" />
+              </div>
 
               <div className="space-y-1 text-sm">
-                <label for="password" className="block text-gray-400">Password</label>
+                <label htmlFor="username" className="block text-gray-400">Username</label>
+                <Field type="text" name="username" id="username" placeholder="@username" className="w-full px-4 py-3 rounded-md border-gray-700 text-gray-100 focus:border-violet-400 text-gray-700" />
+                <ErrorMessage name="username" component="div" className="text-red-500" />
+              </div>
+
+              <div className="space-y-1 text-sm">
+                <label htmlFor="password" className="block text-gray-400">Password</label>
                 <Field type="password" name="password" id="password" placeholder="Password" className="w-full px-4 py-3 rounded-md border-gray-700 text-gray-100 focus:border-violet-400 text-gray-700" />
                 <ErrorMessage name="password" component="div" className="text-red-500" />
               </div>
               
               <div className="space-y-1 text-sm">
-                <label for="confirmPassword" className="block text-gray-400">Confirm password</label>
+                <label htmlFor="confirmPassword" className="block text-gray-400">Confirm password</label>
                 <Field type="password" name="confirmPassword" id="confirmPassword" placeholder="Password" className="w-full px-4 py-3 rounded-md border-gray-700 text-gray-100 focus:border-violet-400 text-gray-700" />
                 <ErrorMessage name="confirmPassword" component="div" className="text-red-500" />
               </div>
 
               <button disabled={loading} type="submit" className="block w-full p-3 text-center rounded-sm text-gray-900 bg-violet-400">
-                {loading ? 'Carregando...' : 'Entrar'}
+                {loading ? 'Loading...' : 'Submit'}
               </button>
             </Form>
           </Formik>

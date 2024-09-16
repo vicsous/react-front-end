@@ -1,12 +1,12 @@
-import { login } from "../store/userSlice";
+import { login } from '../store/userSlice';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
 import * as Yup from 'yup';
 
 const Spinner = () => (
-  <div class="flex justify-center items-center h-screen bg-gray-800">
-  <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-violet-400"></div>
+  <div className="flex justify-center items-center h-screen bg-gray-800">
+    <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-violet-400"></div>
   </div>
 );
 
@@ -20,16 +20,17 @@ const Login = () => {
 
   const validationSchema = Yup.object({
     email: Yup.string()
-      .email('E-mail inválido')
-      .required('Campo obrigatório'),
-    password: Yup.string().required('Campo obrigatório')
+      .email('Invalid email')
+      .required('Required field'),
+    password: Yup.string().required('Required field')
   });
 
   const handleSubmit = (values) => {
     setLoading(true);
+    conseole.log(values)
     dispatch(login(values))
       .then(data => {
-        localStorage.setItem('accessToken', data.payload.accessToken);
+        localStorage.setItem('accessToken', data.payload.user.token);
       })
       .catch(e => {
         console.error(e);
@@ -46,21 +47,21 @@ const Login = () => {
       {loading ? <Spinner /> : (
         <div className="flex justify-center items-center h-screen bg-gray-800">
           <div className="w-full max-w-md p-8 space-y-3 rounded-xl bg-gray-900 text-gray-100">
-            <h1 className="text-2xl font-bold text-center">Login</h1>
+            <h1 className="text-2xl font-bold text-center">Log In</h1>
             {user?.error && <div className="text-red-500 mb-4">{user.error}</div>}
 
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
 
-              <Form form novalidate="" action="" className="space-y-6">
+              <Form noValidate="" action="" className="space-y-6">
                 <div className="space-y-1 text-sm">
-                  <label for="email" className="block text-gray-400">Email</label>
-                  <Field type="text" placeholder="example@mail.com" id="email" name="email" className="w-full px-4 py-3 rounded-md border-gray-700 text-gray-100 focus:border-violet-400 text-gray-700" />
+                  <label htmlFor="email" className="block text-gray-400">Email</label>
+                  <Field type="text" placeholder="example@email.com" id="email" name="email" className="w-full px-4 py-3 rounded-md border-gray-700 text-gray-100 focus:border-violet-400 text-gray-700" />
                   <ErrorMessage name="email" component="div" className="text-red-500" />
                 </div>
 
                 <div className="space-y-1 text-sm">
-                  <label for="password" className="block text-gray-400">Password:</label>
-                  <Field type="password" name="password" id="password" placeholder="Password" className="w-full px-4 py-3 rounded-md border-gray-700 text-gray-100 focus:border-violet-400 text-gray-700" />
+                  <label htmlFor="password" className="block text-gray-400">Password:</label>
+                  <Field autoComplete="on" type="password" name="password" id="password" placeholder="Password" className="w-full px-4 py-3 rounded-md border-gray-700 text-gray-100 focus:border-violet-400 text-gray-700" />
                   <div className="flex justify-end text-xs text-gray-400">
                     <a rel="noopener noreferrer" href="#">Forgot Password?</a>
                   </div>
@@ -68,7 +69,7 @@ const Login = () => {
                 </div>
 
                 <button disabled={loading} type="submit" className="block w-full p-3 text-center rounded-sm text-gray-900 bg-violet-400">
-                  {loading ? 'Carregando...' : 'Entrar'}
+                  {loading ? 'Loading...' : 'Submit'}
                 </button>
               </Form>
             </Formik>

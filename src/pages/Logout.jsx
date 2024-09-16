@@ -1,10 +1,10 @@
-import { useDispatch } from "react-redux";
-import { logout } from "../store/userSlice";
-import { Redirect } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { logout } from '../store/userSlice';
+import { Redirect } from 'react-router-dom';
 
 export default function Logout () {
-    localStorage.removeItem('accessToken')
-    const dispatch = useDispatch()
+    localStorage.removeItem('accessToken');
+    const dispatch = useDispatch();
     dispatch(logout())
-    return <Redirect to='/' />
+    return <Redirect to="/" />
 }
