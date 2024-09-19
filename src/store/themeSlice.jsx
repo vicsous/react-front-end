@@ -10,14 +10,14 @@ export const themeSlice = createSlice({
     setTheme(state) {
       	const currentTheme = localStorage.getItem('theme');
     	if (currentTheme === 'light') {
-        	localStorage.setItem('theme', 'dark')
-        	state.theme = 'dark'
+        	localStorage.setItem('theme', 'dark');
+        	state.theme = 'dark';
       	} 
       	else {
-    		localStorage.setItem('theme', 'light')
-        	state.theme = 'light'
+    		localStorage.setItem('theme', 'light');
+        	state.theme = 'light';
       }
-	  state.status = 'succeeded'
+	  state.status = 'succeeded';
     }
 }})
 

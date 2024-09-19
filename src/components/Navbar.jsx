@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTheme } from '../store/themeSlice';
 import { useState } from 'react';
+import { logout } from '../store/userSlice';
 
 import.meta.env.VITE_REACT_APP_ADMIN_CODE;
 import.meta.env.VITE_REACT_APP_MOD_CODE;
@@ -20,13 +21,12 @@ export default function Navbar () {
 
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   	const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
-
-
+ 
     isActive =>
     "nav-link" + (!isActive ? " unselected" : "");
   
     return (
-	(user.isLogged && (user.status != 'loading')) ?
+	(user?.isLogged && (user?.status != 'loading')) ?
 	<nav className="bg-white dark:bg-gray-800 w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
 		<NavLink to='/' className="flex items-center space-x-3 rtl:space-x-reverse">
@@ -59,8 +59,8 @@ export default function Navbar () {
 					{isDropdownOpen && (
 						<div className="absolute right-0 mt-3 w-48 bg-white divide-y divide-gray-100 rounded-lg shadow-lg z-50 dark:bg-gray-700 dark:divide-gray-600">
 							<div className="px-4 py-3">
-								<span className="block text-sm text-gray-900 dark:text-white">{user.data.username}</span>
-								<span className="block text-sm text-gray-500 truncate dark:text-gray-400">{user.data.email}</span>
+								<span className="block text-sm text-gray-900 dark:text-white">{user?.data?.username}</span>
+								<span className="block text-sm text-gray-500 truncate dark:text-gray-400">{user?.data?.email}</span>
 							</div>
 							<ul className="py-2" aria-labelledby="user-menu-button">
 								<li>
@@ -75,7 +75,9 @@ export default function Navbar () {
 							</ul>
 							<ul className="py-2" aria-labelledby="user-menu-button">
 								<li>
-									<a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+									<button className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white w-full text-left"
+										onClick={() => dispatch(logout())}
+										>Log out</button>
 								</li>
 							</ul>
 						</div>

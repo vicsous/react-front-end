@@ -14,7 +14,6 @@ function App() {
 	const user =  useSelector(state => state.user);
 	const theme =  useSelector(state => state.theme);
 
-	console.log(user)
   	useEffect(() => {
     	// Função para detectar o tema
 		if (!currentTheme) {

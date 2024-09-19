@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axiosInstance from '../utils/axiosInstance';
+import axios from 'axios';
 
 const baseURL = import.meta.env.VITE_REACT_APP_API_URI;
 
@@ -34,12 +35,14 @@ export const userSlice = createSlice({
   
     },
 	logout(state){
+    localStorage.removeItem('accessToken');
+    axios.get(baseURL + '/logout', { withCredentials: true });
 		state.isLogged = false;
 		state.error = null;
 		state.isLogged = false;
 		state.data = initialState.data;
 		state.status = 'succeeded';
-		console.log(state);
+		console.log('User logged out!');
 	}
   },
   extraReducers: builder => {
