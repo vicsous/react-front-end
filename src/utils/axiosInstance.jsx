@@ -1,39 +1,51 @@
-import axios from "axios";
-import jwtDecode from "jwt-decode";
-import dayjs from "dayjs";
+import axios from 'axios';
+import jwtDecode from 'jwt-decode';
+import dayjs from 'dayjs';
+import { useDispatch } from 'react-redux';
+import { logout } from '../store/userSlice';
+//import { useNavigate } from "react-router-dom";
 
 const baseURL = import.meta.env.VITE_REACT_APP_API_URI;
 
-const accessToken = localStorage.getItem('accessToken') || null;
-
 const axiosInstance = axios.create({
-    baseURL,
-    headers: { 
-        authorization: `Bearer ${accessToken || ''}`
-    }
-})
+    baseURL, // Your API base URL
+});
 
-axiosInstance.interceptors.request.use(async req => {
-    let decoded = null;
+axiosInstance.interceptors.request.use(async (req) => {
+  const accessToken = localStorage.getItem('accessToken') || null;
+  req.headers.authorization = `Bearer ${accessToken || ''}`
+
+  if (accessToken) {
+    const user = jwtDecode(accessToken);
+    const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1;
+
+    if (!isExpired) {
+        req.headers.authorization = `Bearer ${accessToken}`;
+        return req;
+    }
+
+    // If the token is expired, we need to refresh it
     try {
-        decoded = await jwtDecode(accessToken);
-    } catch(e){
-        return req
+      	console.log('token expired!');
+      	const response = await axios.post(baseURL + '/refresh', null, { withCredentials: true });
+      	if (response.status === 204) {
+			localStorage.removeItem('accessToken');
+			window.location.href = '/login';
+		} else {
+        	localStorage.setItem('accessToken', response.data.accessToken);
+        	req.headers.authorization = `Bearer ${response.data.accessToken}`;
+      	}
+    } catch (error) {
+      console.error('Failed to refresh token', error);
+      // Optionally, log the user out or redirect to the login page
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      // window.location.href = '/login'; // Redirect to login if needed
     }
-    const isExpired = dayjs.unix(decoded.exp).diff(dayjs()) < 1;
-    if (isExpired) {
-        const mutation = `#graphql
-            mutation Refresh {
-                refresh 
-            }
-        `;
-        const response = await axios.post(baseURL, { query: mutation }, { withCredentials:  true });
-        localStorage.setItem('accessToken', response.data.data.refresh);
-        req.headers.authorization = `Bearer ${response.data.data.refresh}`
-        return req
-    } else {
-        return req
-    }
-})
+  }
 
-export default axiosInstance
+  return req;
+});
+
+export default axiosInstance;
+

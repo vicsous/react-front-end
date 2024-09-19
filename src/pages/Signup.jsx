@@ -1,4 +1,4 @@
-import { signup } from '../store/userSlice';
+import { login } from '../store/userSlice';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
@@ -46,7 +46,7 @@ const Signup = () => {
   const handleSubmit = (values) => {
     setLoading(true);
     alert(JSON.stringify(values))
-    dispatch(signup(values))
+    dispatch(login(values))
       .then(data => {
         localStorage.setItem('accessToken', data.payload.accessToken);
       })
