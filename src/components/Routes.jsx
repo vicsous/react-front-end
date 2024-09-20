@@ -10,7 +10,7 @@ import Logout from '../pages/Logout';
 import Moderator from '../pages/Moderator';
 import Profile from '../pages/Profile';
 import Signup from '../pages/Signup';
-
+import Settings from '../pages/Settings';
 // Components
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
@@ -34,6 +34,7 @@ export default function Routes () {
               <PrivateRoute path="/admin" requiredRole={import.meta.env.VITE_REACT_APP_ADMIN_CODE} component={Admin} />
               <PrivateRoute path="/mod" requiredRole={import.meta.env.VITE_REACT_APP_MOD_CODE} component={Moderator} />
               <PrivateRoute path="/profile" requiredRole={import.meta.env.VITE_REACT_APP_USER_CODE} component={Profile} />
+              <PrivateRoute path="/settings" requiredRole={import.meta.env.VITE_REACT_APP_USER_CODE} component={Settings} />
 
               <Route path="*" component={NotFound} /> 
           </Switch>
