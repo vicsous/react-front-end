@@ -22,14 +22,41 @@ const Notes = () => {
 
   if (loading) return <h1>Loading...</h1>
   return (
-    <div className="p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800">
+    <div className="p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800 flex flex-col items-center">
+		<div class="w-full mb-6 max-w-lg p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+			<span class="bg-blue-900 text-white text-sm font-medium me-2 px-2.5 py-0.5 rounded-lg">@meupaldilado</span>
+
+			<h5 className="mb-2 text-2xl font-bold tracking-tight">ql foi a coisa mais aleatoria q vc ja viu?</h5>
+
+			<p className="text-black font-bold drop-shadow-2xl">um dia vi um gurila albino cacçando lampreias na beira do lago baikal a meia noite na lua cheia de uma sexta feira 1</p>
+			<hr class="h-px my-4 bg-gray-200 border-0"></hr>
+			<div className='flex justify-between'>
+			<button className='rounded-lg hover:bg-gray-800'>
+				<svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+				<path stroke="currentColor" stroke-linecap="round" stroke-width="3" d="M12 6h.01M12 12h.01M12 18h.01"/>
+				</svg>
+			</button>
+
+			<div className='flex'>
+				<button className='flex rounded-lg hover:bg-gray-800'>
+				<svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+					<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 20l6.23-7C23 8 17.5 1 12.01 6.002Z"/>
+				</svg>
+
+				10
+				</button>
+			</div>
+			</div>
+		</div>
     {/* Notes Content */}
     {notes.map((note, key) => {
       return (
-        <a href='#' key={key} className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-          <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{note.title}</h5>
-          <p className="font-normal text-gray-700 dark:text-gray-400">{note.content}</p>
-        </a>
+        <>
+			<a href='#' key={key} className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+			<h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{note.title}</h5>
+			<p className="font-normal text-gray-700 dark:text-gray-400">{note.content}</p>
+			</a>
+        </>
       )
     })}
     </div>
@@ -61,7 +88,7 @@ function Tabs() {
             onClick={() => setActiveTab('stats')}
             className={`inline-block w-full p-4 rounded-ss-lg ${activeTab === 'stats' ? 'text-blue-500' : 'text-gray-500'} bg-gray-50 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600`}
           >
-            Statistics
+            Respondidas (20)
           </button>
         </li>
         <li className="w-full">
@@ -69,7 +96,7 @@ function Tabs() {
             onClick={() => setActiveTab('notes')}
             className={`inline-block w-full p-4 ${activeTab === 'notes' ? 'text-blue-500' : 'text-gray-500'} bg-gray-50 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600`}
           >
-            Notes
+            Novas (3)
           </button>
         </li>
         <li className="w-full">

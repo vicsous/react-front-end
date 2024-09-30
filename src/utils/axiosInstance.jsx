@@ -8,8 +8,16 @@ import { logout } from '../store/userSlice';
 const baseURL = import.meta.env.VITE_REACT_APP_API_URI;
 
 const axiosInstance = axios.create({
+<<<<<<< HEAD
     baseURL, // Your API base URL
 });
+=======
+    baseURL,
+    headers: { 
+        Authorization: `Bearer ${accessToken || ''}`
+    }
+})
+>>>>>>> 705769da05a5170986bc1b321c2471d41e82ecdf
 
 axiosInstance.interceptors.request.use(async (req) => {
   const accessToken = localStorage.getItem('accessToken') || null;
@@ -24,6 +32,7 @@ axiosInstance.interceptors.request.use(async (req) => {
         return req;
     }
 
+<<<<<<< HEAD
     // If the token is expired, we need to refresh it
     try {
       	console.log('token expired!');
@@ -49,3 +58,6 @@ axiosInstance.interceptors.request.use(async (req) => {
 
 export default axiosInstance;
 
+=======
+export default axiosInstance
+>>>>>>> 705769da05a5170986bc1b321c2471d41e82ecdf

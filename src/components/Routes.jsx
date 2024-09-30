@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+=======
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
+>>>>>>> 705769da05a5170986bc1b321c2471d41e82ecdf
 
 // Pages
 import Admin from '../pages/Admin';
